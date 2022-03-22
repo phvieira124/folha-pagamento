@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('checkout:git') {
             steps {
-                 git credentialsId: '15983b9a-5411-410b-bed1-3bb1c7ecdb34', url: 'https://github.com/phvieira124/sre-docker-lab.git'
+                 git credentialsId: '15983b9a-5411-410b-bed1-3bb1c7ecdb34', url: 'https://github.com/phvieira124/folha-pagamento.git'
             }
         }
 
@@ -19,7 +19,7 @@ pipeline {
 
         stage('metrics:prometheus') {
             steps {
-                sh 'docker run -itd -p 9090:9090 -v ./prometheus.yaml:/etc/prometheus/prometheus.yml prom/prometheus'
+                sh 'sudo docker run -itd -p 9090:9090 -v ./prometheus.yaml:/etc/prometheus/prometheus.yml prom/prometheus'
             }
         }
     }
