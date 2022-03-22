@@ -1,0 +1,46 @@
+global:
+  scrape_interval: 15s # By default, scrape targets every 15 seconds.
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    monitor: 'codelab-monitor'
+
+rule_files:
+  - /etc/prometheus/rules/*.rules
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+      
+  - job_name: hr-eureka-server
+    metrics_path: /actuator/prometheus
+    static_configs:
+    - targets:
+      - 192.168.15.97:8761
+
+  - job_name: hr-payroll
+    metrics_path: /actuator/prometheus
+    static_configs:
+    - targets:
+      - 192.168.15.97:8100
+
+  - job_name: hr-worker
+    metrics_path: /actuator/prometheus
+    static_configs:
+    - targets:
+      - 192.168.15.97:8200
+
+  - job_name: netflix-zull-api-gatway-server
+    metrics_path: /actuator/prometheus
+    static_configs:
+    - targets:
+      - 192.168.15.97:8081
+      

@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  hr-worker-service:
+    build:
+      context: ./hr-worker
+    deploy:
+      mode: replicated
+      replicas: 1
+  hr-payroll-service:
+    build:
+      context: ./hr-payroll
+    deploy:
+      mode: replicated
+      replicas: 1
+    depends_on:
+      - hr-worker-service

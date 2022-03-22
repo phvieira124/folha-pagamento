@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hr-payroll-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hr-payroll
+  template:
+    metadata:
+      labels:
+        app: hr-payroll
+    spec:
+      containers:
+        - name: hr-payroll-service
+          image: folha_pagamento_hr-payroll-service
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8100

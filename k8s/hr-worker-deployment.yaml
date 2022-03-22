@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hr-worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hr-worker
+  template:
+    metadata:
+      labels:
+        app: hr-worker
+    spec:
+      containers:
+        - name: hr-worker-service
+          image: folha_pagamento_hr-worker-service
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8200

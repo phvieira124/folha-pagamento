@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  eureka-server:
+    build:
+      context: ./hr-eureka-server
+    ports:
+      - "8761:8761"
+  api-gatway-service:
+    build:
+      context: ./netflix-zuul-api-gateway-server
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    expose:
+      - "8081"
+    ports:
+      - "8081:8765"
+  hr-worker-service:
+    build:
+      context: ./hr-worker
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka/
+    deploy:
+      mode: replicated
+      replicas: 1
+    depends_on:
+      - eureka-server
+      - api-gatway-service
+  hr-payroll-service:
+    build:
+      context: ./hr-payroll
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+      - api-gatway-service

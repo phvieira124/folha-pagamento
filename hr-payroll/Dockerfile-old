@@ -1,0 +1,11 @@
+FROM maven:3.8.4-openjdk-11-slim AS hr-payroll-service
+RUN mkdir /hr-payroll-build
+WORKDIR /hr-payroll-build
+COPY . .
+RUN mvn clean install
+
+FROM openjdk:11
+RUN mkdir /hr-payroll-run
+WORKDIR /hr-payroll-run
+COPY --from=hr-payroll-service /hr-payroll-build/target/hr-payroll-0.0.1.jar .
+CMD ["java", "-jar", "hr-payroll-0.0.1.jar"]
