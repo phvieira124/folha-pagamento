@@ -3,13 +3,11 @@ package com.nttdata.hrpayroll.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import com.nttdata.hrpayroll.entities.Payment;
 import com.nttdata.hrpayroll.entities.Worker;
 import com.nttdata.hrpayroll.feignclients.WorkerFeignClient;
 
-@Service
+@Service("hrPayRollService")
 public class PaymentService {
 
 	@Autowired
